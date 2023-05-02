@@ -25,7 +25,6 @@
 
 #include <cstddef>
 #include <algorithm>
-#include <type_traits>
 
 namespace at {
 	namespace impl {
