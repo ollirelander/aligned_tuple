@@ -1,6 +1,6 @@
 // Licensed under the MIT License <http://opensource.org/licenses/MIT>.
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2019 - 2022 Daniil Goncharov <neargye@gmail.com>.
+// Copyright (c) 2019 - 2023 Olli Relander
 //
 // Permission is hereby  granted, free of charge, to any  person obtaining a copy
 // of this software and associated  documentation files (the "Software"), to deal
@@ -24,9 +24,11 @@
 #define ALIGNED_TUPLE_HPP
 
 #include <cstddef>
+#include <algorithm>
+#include <type_traits>
 
 namespace at {
-	namespace get_impl {
+	namespace impl {
 		template<std::size_t N> struct getter;
 	}
 
@@ -36,7 +38,7 @@ namespace at {
 		static_assert(Align >= alignof(T), "Alignment must be greater than default alignment!");
 		static_assert((Align & (Align - 1)) == 0, "Alignment must be power of two!");
 
-		template<std::size_t N> friend struct get_impl::getter;
+		template<std::size_t N> friend struct impl::getter;
 
 		constexpr aligned_tuple(const T& first, const Ts&... rest)
 			: current_value(first), rest(rest...) {}
@@ -57,7 +59,7 @@ namespace at {
 		static_assert(Align >= alignof(T), "Alignment must be greater than default alignment!");
 		static_assert((Align & (Align - 1)) == 0, "Alignment must be power of two!");
 
-		template<std::size_t N> friend struct get_impl::getter;
+		template<std::size_t N> friend struct impl::getter;
 
 		constexpr aligned_tuple(const T& first)
 			: current_value(first) {}
@@ -71,18 +73,13 @@ namespace at {
 		alignas(Align) T current_value;
 	};
 
-	template<std::size_t Align, typename... Ts>
-	constexpr aligned_tuple<Align, Ts...> make_aligned_tuple(const Ts&... values) noexcept {
-		return aligned_tuple<Align, Ts...>(values...);
-	}
-
-	namespace get_impl {
+	namespace impl {
 		template <std::size_t N, typename... Ts>
 		struct nth_type;
 
 		template <typename T, typename... Ts>
 		struct nth_type<0, T, Ts...> {
-			typedef T type;
+			typedef typename T type;
 		};
 
 		template <std::size_t N, typename T, typename... Ts>
@@ -110,9 +107,19 @@ namespace at {
 		};
 	}
 
+	template<std::size_t Align, typename... Ts>
+	constexpr aligned_tuple<Align, Ts...> make_aligned_tuple(const Ts&... values) noexcept {
+		return aligned_tuple<Align, Ts...>(values...);
+	}
+
+	template<typename... Ts, std::size_t Align = std::max({ alignof(Ts)... })>
+	constexpr aligned_tuple<Align, Ts...> make_aligned_tuple(const Ts&... values) noexcept {
+		return aligned_tuple<Align, Ts...>(values...);
+	}
+
 	template<std::size_t I, std::size_t Align, typename... Ts>
-	constexpr get_impl::nth_type_t<I, Ts...>& get(aligned_tuple<Align, Ts...>& tuple) noexcept {
-		return get_impl::getter<I>::get(tuple);
+	constexpr impl::nth_type_t<I, Ts...>& get(aligned_tuple<Align, Ts...>& tuple) noexcept {
+		return impl::getter<I>::get(tuple);
 	}
 }
 
