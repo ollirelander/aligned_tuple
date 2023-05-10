@@ -1,6 +1,6 @@
 # Aligned Tuple C++14 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This library provides an implementation of a tuple where the elements are aligned to a specified alignment. It can be useful in scenarios where alignment matters, such as with SIMD instructions or when writing low-level code.
+This library provides a standard layout implementation of a tuple where the elements are aligned to a specified alignment. It can be useful in scenarios where alignment matters, such as with SIMD instructions or when writing low-level code.
 
 ## Installation
 
