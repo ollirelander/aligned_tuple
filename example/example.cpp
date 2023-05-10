@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include "aligned_tuple.hpp"
+
+#include <aligned_tuple.hpp>
 
 int main() {
     using namespace at;
