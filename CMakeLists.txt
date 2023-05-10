@@ -8,15 +8,10 @@ project(
     LANGUAGES CXX
 )
 
-option(ALIGNED_TUPLE_OPT_BUILD_EXAMPLES "Build aligned_tuple examples" OFF)
-option(ALIGNED_TUPLE_OPT_BUILD_TESTS "Build aligned_tuple tests" ON)
+option(ALIGNED_TUPLE_OPT_BUILD_EXAMPLES "Build aligned_tuple examples" ON)
 
 if(ALIGNED_TUPLE_OPT_BUILD_EXAMPLES)
     add_subdirectory(example)
-endif()
-
-if(ALIGNED_TUPLE_OPT_BUILD_TESTS)
-    add_subdirectory(test)
 endif()
 
 add_library(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include/aligned_tuple.hpp")
