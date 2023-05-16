@@ -16,13 +16,13 @@ int main() {
     auto at3 = make_aligned_tuple(2.2f, 3, std::string("test"));
 
     std::cout << "Alignment of at1 -> " << alignof(decltype(at1)) << "\nvalues:\n";
-    std::cout << "  1: " << get<0>(at1) << "\n  2: " << get<1>(at1) << std::endl;
+    std::cout << "  1: " << get<0>(at1) << "\n  2: " << get<1>(at1);
 
-    std::cout << "\nAlignment of at2 -> " << alignof(decltype(at2)) << "\nvalues:\n";
-    std::cout << "  1: " << get<0>(at2) << "\n  2: " << get<1>(at2) << "\n  3: " << get<2>(at2) << std::endl;
+    std::cout << "\n\nAlignment of at2 -> " << alignof(decltype(at2)) << "\nvalues:\n";
+    std::cout << "  1: " << get<0>(at2) << "\n  2: " << get<1>(at2) << "\n  3: " << get<2>(at2);
 
-    std::cout << "\nAlignment of at3 -> " << alignof(decltype(at3)) << "\nvalues:\n";
-    std::cout << "  1: " << get<0>(at3) << "\n  2: " << get<1>(at3) << "\n  3: " << get<2>(at3) << std::endl;
+    std::cout << "\n\nAlignment of at3 -> " << alignof(decltype(at3)) << "\nvalues:\n";
+    std::cout << "  1: " << get<0>(at3) << "\n  2: " << get<1>(at3) << "\n  3: " << get<2>(at3);
 
     return 0;
 }
